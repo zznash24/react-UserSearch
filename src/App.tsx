@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import UserSearch from './Components/UserSearch';
 
-function App() {
+const App: React.FC = () => {
   return (
     <UserSearch />
   );
