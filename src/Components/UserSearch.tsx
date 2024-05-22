@@ -13,23 +13,36 @@ interface User {
   };
 }
 
-const UserSearch = () => {
-    let [users, setUsers] = useState<User[]>([]);
-
+const UserSearch: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setUsers(data))
   }, []);
+
   return (
-    <Autocomplete
-      disablePortal
-      id="user-search"
-      options={users}
-      sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Users" />}
-    />
+    <div>
+      <Autocomplete
+        disablePortal
+        id="user-search"
+        options={users}
+        getOptionLabel={(option) => option.name || ""}
+        sx={{ width: 300 }}
+        onChange={(event, value) => setSelectedUser(value)}
+        renderInput={(params) => <TextField {...params} label="Users" />}
+      />
+      {selectedUser && (
+        <div>
+          <h2>{selectedUser.name}</h2>
+          <p>
+            {selectedUser.address.street}, {selectedUser.address.suite}, {selectedUser.address.city}, {selectedUser.address.zipcode}
+          </p>
+        </div>
+      )}
+    </div>
   );
 };
 
