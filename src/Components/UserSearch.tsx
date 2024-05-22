@@ -20,8 +20,31 @@ const UserSearch: React.FC = () => {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then((data) => setUsers(data))
+      .then((data) => setUsers(data));
   }, []);
+
+  const formatUsers = (user: User) => {
+    let titles = ["Mr.", "Mrs.", "Ms."];
+    let suffixs = ["I", "II", "III", "IV", "V"];
+    const names = user.name.split(" ");
+
+    let title = "";
+    let suffix = "";
+    let lastName = "";
+    let firstName = "";
+
+    if (titles.includes(names[0])) {
+      title = names.shift() as string;
+    }
+    if (suffixs.includes(names[names.length - 1])) {
+      suffix = names.pop() as string;
+    }
+
+    lastName = names.pop() as string;
+    firstName = names.join(" ");
+
+    return `${lastName} ${suffix}, ${firstName} ${title}`;
+  };
 
   return (
     <div>
@@ -29,7 +52,7 @@ const UserSearch: React.FC = () => {
         disablePortal
         id="user-search"
         options={users}
-        getOptionLabel={(option) => option.name || ""}
+        getOptionLabel={(option) => formatUsers(option)}
         sx={{ width: 300 }}
         onChange={(event, value) => setSelectedUser(value)}
         renderInput={(params) => <TextField {...params} label="Users" />}
@@ -38,7 +61,10 @@ const UserSearch: React.FC = () => {
         <div>
           <h2>{selectedUser.name}</h2>
           <p>
-            {selectedUser.address.street}, {selectedUser.address.suite}, {selectedUser.address.city}, {selectedUser.address.zipcode}
+            {selectedUser.address.street}, {selectedUser.address.suite}
+          </p>
+          <p>
+            {selectedUser.address.city}, {selectedUser.address.zipcode}
           </p>
         </div>
       )}
