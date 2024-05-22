@@ -59,9 +59,12 @@ const UserSearch: React.FC = () => {
       />
       {selectedUser && (
         <div>
-          <h2>{selectedUser.name}</h2>
+          <h2>{formatUsers(selectedUser)}</h2>
           <p>
-            {selectedUser.address.street}, {selectedUser.address.suite}
+            {selectedUser.address.street} 
+          </p>
+          <p>
+            {selectedUser.address.suite}
           </p>
           <p>
             {selectedUser.address.city}, {selectedUser.address.zipcode}
