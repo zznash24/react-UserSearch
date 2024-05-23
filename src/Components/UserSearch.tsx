@@ -63,25 +63,25 @@ const UserSearch: React.FC = () => {
         id="user-search"
         options={users}
         getOptionLabel={(option) => formatUsers(option)}
-        sx={{ width: 300 }}
+        sx={{ width: 500 }}
         onChange={(event, value) => setSelectedUser(value)}
         renderInput={(params) => <TextField {...params} label="Users" />}
       />
       {selectedUser && (
         <Card sx={{ marginTop: 2, border: "1px solid #ccc", backgroundColor: "burlywood" }}>
-        <CardContent>
-          <Typography variant="h5">{formatUsers(selectedUser)}</Typography>
-          <Typography>
-            {selectedUser.address.street}
-          </Typography>
-          <Typography>
-            {selectedUser.address.suite}
-          </Typography>
-          <Typography>
-            {selectedUser.address.city}, {selectedUser.address.zipcode}
-          </Typography>
-        </CardContent>
-      </Card>
+          <CardContent>
+            <Typography variant="h5">{formatUsers(selectedUser)}</Typography>
+            <Typography>
+              {selectedUser.address.street}
+            </Typography>
+            <Typography>
+              {selectedUser.address.suite}
+            </Typography>
+            <Typography>
+              {selectedUser.address.city}, {selectedUser.address.zipcode}
+            </Typography>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
