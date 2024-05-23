@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 interface User {
   id: number;
@@ -20,7 +23,14 @@ const UserSearch: React.FC = () => {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data: User[]) => {
+        const sortedUsers = data.sort((a, b) => {
+            const lastNameA = a.name.split(" ").pop() || "";
+            const lastNameB = b.name.split(" ").pop() || "";
+            return lastNameA.localeCompare(lastNameB);
+          });
+          setUsers(sortedUsers);
+        });
   }, []);
 
   const formatUsers = (user: User) => {
@@ -58,18 +68,20 @@ const UserSearch: React.FC = () => {
         renderInput={(params) => <TextField {...params} label="Users" />}
       />
       {selectedUser && (
-        <div>
-          <h2>{formatUsers(selectedUser)}</h2>
-          <p>
-            {selectedUser.address.street} 
-          </p>
-          <p>
+        <Card sx={{ marginTop: 2, border: "1px solid #ccc", backgroundColor: "burlywood" }}>
+        <CardContent>
+          <Typography variant="h5">{formatUsers(selectedUser)}</Typography>
+          <Typography>
+            {selectedUser.address.street}
+          </Typography>
+          <Typography>
             {selectedUser.address.suite}
-          </p>
-          <p>
+          </Typography>
+          <Typography>
             {selectedUser.address.city}, {selectedUser.address.zipcode}
-          </p>
-        </div>
+          </Typography>
+        </CardContent>
+      </Card>
       )}
     </div>
   );
