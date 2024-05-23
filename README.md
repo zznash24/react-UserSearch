@@ -10,7 +10,7 @@ Welcome to our React Autocomplete Application! This intuitive app leverages the 
 
 ### Clone the Repository:
 `git clone <repository-url>`
-cd react-autocomplete-app
+`cd react-autocomplete-app`
 
 ### Getting Started
 npm install
